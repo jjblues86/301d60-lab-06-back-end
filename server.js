@@ -30,11 +30,21 @@ function getWeather(request, response){
 
 }
 
+// let weatherLocations = [];
+
 //Constructors
 function Location(location){
   this.formatted_address = location.formatted_address;
   this.latitude = location.geometry.location.lat;
   this.longitude = location.geometry.location.lng;
+  // weatherLocations.push(this.latitude);
+  // weatherLocations.push(this.longitude);
+}
+
+function Daily(dailyForecast){
+  this.forecast = dailyForecast.summary;
+  console.log('what', dailyForecast.summary);
+  this.time = new Date(dailyForecast.time * 1000).toDateString();
 }
 
 //Search for data
@@ -47,7 +57,16 @@ function searchLatToLng(query){
 function searchWeather(query){{
   let darkSkyData = require('./data/darksky.json');
   console.log(darkSkyData);
+  let weatheArray = [];
+  darkSkyData.daily.data.forEach(forecast => weatheArray.push(new Daily(forecast)));
+  console.log(weatheArray);
+  return weatheArray;
 }}
+
+//Error handler
+app.get('/*', function(request, response){
+  response.status(404).send('Try again!')
+})
 
 app.listen(PORT, () => {
   console.log(`app running on PORT: ${PORT}`);
