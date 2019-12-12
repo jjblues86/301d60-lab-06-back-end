@@ -34,7 +34,7 @@ function getWeather(request, response){
 
 //Constructors
 function Location(location){
-  this.formatted_address = location.formatted_address;
+  this.formatted_query = location.formatted_address;
   this.latitude = location.geometry.location.lat;
   this.longitude = location.geometry.location.lng;
   // weatherLocations.push(this.latitude);
